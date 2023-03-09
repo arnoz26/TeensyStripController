@@ -26,15 +26,15 @@
 
 #if defined(__IMXRT1062__)
 
-#define TH_TL	1.25e-6
+//#define TH_TL	1.25e-6
 //#define T0H 0.30e-6
 //#define T1H 0.75e-6
 // Slightly modified these timings using those used by Fastled WS2812Controller800Khz Controller
 // Seems it works better with WS2812B-V5 ledstrips (V4 still working perfectly, even when mixed with V5)
 //#define T0H  0.375e-6
 //#define T1H 0.625e-6
-#define T0H  0.360e-6
-#define T1H 0.590e-6
+//#define T0H  0.360e-6
+//#define T1H 0.590e-6
 
 // Ordinary RGB data is converted to GPIO bitmasks on-the-fly using
 // a transmit buffer sized for 2 DMA transfers.  The larger this setting,
@@ -45,6 +45,9 @@
 
 uint8_t OctoWS2811::defaultPinList[8] = {2, 14, 7, 8, 6, 20, 21, 5};
 uint16_t OctoWS2811::stripLen;
+float OctoWS2811::timing_thtl = 1.25e-6;
+float OctoWS2811::timing_t0h = 0.375e-6;
+float OctoWS2811::timing_t1h = 0.625e-6;
 //uint8_t OctoWS2811::brightness = 255;
 void * OctoWS2811::frameBuffer;
 void * OctoWS2811::drawBuffer;
@@ -67,7 +70,7 @@ volatile uint32_t framebuffer_index = 0;
 volatile bool dma_first;
 
 static uint32_t update_begin_micros = 0;
-static uint32_t update_micros_delay = 50;
+static uint32_t update_micros_delay = 300;
 
 
 OctoWS2811::OctoWS2811(uint32_t numPerStrip, void *frameBuf, void *drawBuf, uint8_t config, uint8_t numPins, const uint8_t *pinList)
@@ -130,9 +133,9 @@ void OctoWS2811::begin(void)
 	arm_dcache_flush_delete(bitmask, sizeof(bitmask));
 
 	// Set up 3 timers to create waveform timing events
-	comp1load[0] = (uint16_t)((float)F_BUS_ACTUAL * (float)TH_TL);
-	comp1load[1] = (uint16_t)((float)F_BUS_ACTUAL * (float)T0H);
-	comp1load[2] = (uint16_t)((float)F_BUS_ACTUAL * (float)T1H);
+	comp1load[0] = (uint16_t)((float)F_BUS_ACTUAL * (float)timing_thtl);
+	comp1load[1] = (uint16_t)((float)F_BUS_ACTUAL * (float)timing_t0h);
+	comp1load[2] = (uint16_t)((float)F_BUS_ACTUAL * (float)timing_t1h);
 	if ((params & 0xC0) == WS2811_400kHz) {
 		comp1load[0] *= 2;
 		comp1load[1] *= 2;
@@ -219,6 +222,8 @@ void OctoWS2811::begin(void)
 	dma3.TCD->BITER_ELINKNO = numbytes * 8;
 	dma3.TCD->CSR = DMA_TCD_CSR_DREQ | DMA_TCD_CSR_DONE;
 	dma3.triggerAtHardwareEvent(DMAMUX_SOURCE_XBAR1_2);
+
+  DMAPriorityOrder(dma3, dma2, dma1);
 
 	// set up the buffers
 	uint32_t bufsize = numbytes * numpins;
@@ -375,6 +380,13 @@ int OctoWS2811::busy(void)
 	if (!dma3.complete()) return 1; // DMA still running
 	if (micros() - update_begin_micros < numbytes * 10 + update_micros_delay) return 1; // WS2812 reset
 	return 0;
+}
+
+void OctoWS2811::setStripTimings(uint16_t thtl, uint16_t t0h, uint16_t t1h)
+{
+  timing_thtl = (float)thtl * 1.0e-9;
+  timing_t0h = (float)t0h * 1.0e-9;
+  timing_t1h = (float)t1h * 1.0e-9;
 }
 
 // For Teensy 4.x, the pixel data is stored in ordinary RGB format.  Translation

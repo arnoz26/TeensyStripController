@@ -54,7 +54,7 @@
 //Definiton of Major and Minor part of the firmware version. This value can be received using the V command.
 //If something is changed in the code the number should be increased.
 #define FirmwareVersionMajor 1
-#define FirmwareVersionMinor 4
+#define FirmwareVersionMinor 5
 
 //For Teensy 4.0 you can define the nuber of ouput Pins - 8 should be good (for 3.1/3.2 this is only used for calculation and schould not changed)
 const int numPins = 8;
@@ -63,7 +63,7 @@ byte pinList[numPins] = {2, 14, 7, 8, 6, 20, 21, 5};
 
 //Defines the max number of leds which is allowed per ledstrip.
 //This number is fine for Teensy 3.2, 3.1. For newer Teensy versions (they dont exists yet) it might be possible to increase this number.
-#define MaxLedsPerStrip 1100
+#define MaxLedsPerStrip 2100
 
 //Defines the Pinnumber to which the built in led of the Teensy is connected.
 //For Teensy 3.2, 3.1 this is pin 13, if you use a newer Teensy version (not available at the time of writing) you might need to change this number.
@@ -150,6 +150,7 @@ void loop() {
         break;
       case 'T':
         //initiate Test over serial  
+        Ack();
         Test();
         break;
       default:

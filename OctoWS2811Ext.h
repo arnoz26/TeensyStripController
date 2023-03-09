@@ -90,6 +90,9 @@ public:
 	void begin(void);
 
   void setStripLength(uint16_t length);
+#if defined(__IMXRT1062__)
+  void setStripTimings(uint16_t thtl, uint16_t t0h, uint16_t t1h);
+#endif
 
 	void setPixel(uint32_t num, int color);
 	void setPixel(uint32_t num, uint8_t red, uint8_t green, uint8_t blue) {
@@ -136,6 +139,9 @@ private:
 	static void *frameBuffer;
 	static void *drawBuffer;
 	static uint8_t params;
+#if defined(__IMXRT1062__)
+  static float timing_thtl, timing_t0h, timing_t1h;
+#endif
 	static DMAChannel dma1, dma2, dma3;
 	static void isr(void);
 	static uint8_t defaultPinList[8];
