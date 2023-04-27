@@ -24,14 +24,6 @@ Currently the firmware supports up to 1100 leds on each of the  output 8 channel
 
 To drive the controller at least DirectOutput Framework R3 is required. Check out the DOF docu page on _BuiltIn Output controllers_ for details on the configuration of DOF for the TeensyStrip controller.
 
-Integrated Product
-------------------
-
-The Oak Micros Pinball Addressable LEDs (PAL) board is a pre-built integrated product that can be used to control up to 8 addressable LEDs strips. It uses the Teensy 3.2 and the latest software from this site. It includes a pushbutton which can be used to initiate a LED test when powered up and has a pluggable screw connector for power and 6 LED connections. The remaining two other LED connections are available on an optional 0.1" header.
-
-![Oak Micros PAL board](http://vpforums.org/imghost/24/pal_board.jpg)
-
-For further information read the [user guide](https://drive.google.com/open?id=1Zk_5RxsWX4VIPhT4XtGlj1rNlBTug39a) and see [this thread](https://www.vpforums.org/index.php?showtopic=43482) on VPForums.org.
 
 Documentation
 -------------
