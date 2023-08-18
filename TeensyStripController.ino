@@ -63,7 +63,7 @@ byte pinList[numPins] = {2, 14, 7, 8, 6, 20, 21, 5};
 
 //Defines the max number of leds which is allowed per ledstrip.
 //This number is fine for Teensy 3.2, 3.1. For newer Teensy versions (they dont exists yet) it might be possible to increase this number.
-#define MaxLedsPerStrip 1500
+#define MaxLedsPerStrip 2100
 
 //Defines the Pinnumber to which the built in led of the Teensy is connected.
 //For Teensy 3.2, 3.1 this is pin 13, if you use a newer Teensy version (not available at the time of writing) you might need to change this number.
@@ -172,6 +172,7 @@ void loop() {
   }
 
 }
+
 
 //Sets the mode for the blinking of the led
 void SetBlinkMode(int Mode) {
@@ -424,4 +425,4 @@ void Chaser()
   delay(2000);
   ColorWipe(BLACK, 10);
   leds.show();
-}   
+}  
