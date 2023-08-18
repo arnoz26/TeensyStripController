@@ -3,16 +3,16 @@ TeensyStripController 1.04
 
 Firmware for a Teensy 3.1/3.2 or Teensy 4.0 to control WS2811/WS2812 based ledstrips. Fully compatible with the DirectOutput Framework.
 
-![Teensy 3.1 with OctoWS2811 adaptor](http://www.pjrc.com/store/octo28_adaptor_6.jpg)
+![Teencab adaptor](https://shop.arnoz.com/516-large_default/teencab.jpg)
 
 
 Hardware
 --------
-This code has been designed for Teensy 3.1 or Teensy 3.2. For easy installation of the ledstrips is is highly recommended to get a OctoWS2811 adaptor board as well. 
-Both boards are available at http://pjrc.com/store/ 
-For the Teensy be sure to get a Teensy 3.2, preferably the version which has the pins already soldered in.
+This code has been designed for Teensy 3.1 or Teensy 4.0. For easy installation of the ledstrips is is highly recommended to get a TEENCAB adaptor board as well. 
+Both boards are available at https://www.arnoz.com/ 
+For the Teensy be sure to get a Teensy 4.0, preferably the version which has the pins already soldered in.
 
-Ledstrips using the WS2812 are widely available on Ebay, AliExpress, Adafruit (Neopixels) and many other sources. Be careful when ordering ledstrips. After all these are low cost china products with all the pros and cons these products have.
+Ledstrips using the WS2812B are widely available on Ebay, AliExpress, Adafruit (Neopixels) and many other sources. Be careful when ordering ledstrips. After all these are low cost china products with all the pros and cons these products have.
 
 Make sure your power supply is strong enough. Every led needs up to 60ma and having strips with a lot of leds can easily drive you into high power requirements (e.g. 1m of ledstrip with 60 leds needs a PSU delivering at least 3.6A). Use thick wires for the power connections to the ledstrips and be sure to inject power after every 100-200 leds at least. Be careful to do the wiring correctly, otherwise the ledstrip, the wiring or even the PSU can get pretty hot which can be a fire hazard and which is bad for the lifetime of the whole setup. If using a lot of leds, be even more careful! A lot of leds means a lot of amperes and a lot of amperes with low voltage is also used for welding!
 
@@ -27,12 +27,12 @@ To drive the controller at least DirectOutput Framework R3 is required. Check ou
 
 Documentation
 -------------
-More information can be found in the wiki for this project: https://github.com/DirectOutput/TeensyStripController/wiki
+More information can be found in the wiki for this project: https://github.com/arnoz26/TeensyStripController/wiki
 
 
 Firmware Downloads
 ------------------
-Compiled firmware files can be downloaded from: https://github.com/DirectOutput/TeensyStripController/releases
+Compiled firmware files can be downloaded from: https://github.com/arnoz26/TeensyStripController/releases
 
 License
 -------
