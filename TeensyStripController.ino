@@ -72,6 +72,13 @@ byte pinList[numPins] = {2, 14, 7, 8, 6, 20, 21, 5};
 // Defines the Pinnumber for the test button which is low when pressed
 #define TestPin 17
 
+// TEST double click settings
+long buttonTimer = 0;
+long longPressTime = 2000;
+
+boolean buttonActive = false;
+boolean longPressActive = false;
+
 //Memory buffers for the OctoWS2811 lib
 DMAMEM int displayMemory[MaxLedsPerStrip * numPins * 3 / 4];
 int drawingMemory[MaxLedsPerStrip * numPins * 3 / 4];
@@ -158,21 +165,36 @@ void loop() {
         Nack();
       break;
     }
-
    
     SetBlinkMode(1);
-    
-    
+        
   } 
   Blink();
 
-  if (! digitalRead(TestPin)) { 
-    // run test if button is grounded
-    Test();
-  }
+  // TEST ROUTINES BUTTON DETECTION
+
+	if (digitalRead(TestPin) == LOW) {
+	//Button pressed
+		if (buttonActive == false) {
+			buttonActive = true;
+			buttonTimer = millis();
+		}
+		if ((millis() - buttonTimer > longPressTime) && (longPressActive == false)) {
+			longPressActive = true;
+        Chaser();
+		}
+	} else {
+		if (buttonActive == true) {
+			if (longPressActive == true) {
+				longPressActive = false;
+			} else {
+        Test();
+			}
+			buttonActive = false;
+		}
+	}
 
 }
-
 
 //Sets the mode for the blinking of the led
 void SetBlinkMode(int Mode) {
@@ -395,7 +417,6 @@ void Test() {
   //ColorWipe(ORANGE, microsec);
   //ColorWipe(WHITE, microsec);
   ColorWipe(BLACK, 10);
-  Chaser();
 }
 
 void ColorWipe(int color, int wait)
