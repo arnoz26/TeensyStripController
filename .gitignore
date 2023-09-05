@@ -2,3 +2,6 @@
 *.hex
 
 .vscode/arduino.json
+build/teensy.avr.teensy40/TeensyStripController.ino.eep
+build/teensy.avr.teensy40/TeensyStripController.ino.lst
+build/teensy.avr.teensy40/TeensyStripController.ino.sym
